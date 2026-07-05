@@ -191,7 +191,8 @@ export function App() {
 
   async function createProject(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
     const name = String(form.get("projectName") || "");
     const organization = String(form.get("organizationName") || "");
     setBusy(true);
@@ -206,7 +207,7 @@ export function App() {
           description: String(form.get("projectDescription") || "")
         })
       });
-      event.currentTarget.reset();
+      formEl.reset();
       await loadProjects();
       setMessage("Project created");
     } catch (error) {
@@ -219,7 +220,8 @@ export function App() {
   async function createQueue(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!selectedProjectId) return;
-    const form = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
     setBusy(true);
     try {
       await request<Queue>("/v1/queues", {
@@ -231,7 +233,7 @@ export function App() {
           concurrency_limit: Number(form.get("concurrency") || 10)
         })
       });
-      event.currentTarget.reset();
+      formEl.reset();
       await loadQueues(selectedProjectId);
       setMessage("Queue created");
     } catch (error) {

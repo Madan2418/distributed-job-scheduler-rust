@@ -31,21 +31,21 @@ pub fn build_router(state: AppState) -> Router {
     // Protected routes — require valid JWT
     let protected = Router::new()
         // Jobs
-        .route("/v1/queues/{queue_id}/jobs", post(jobs::create_job).get(jobs::list_jobs))
-        .route("/v1/jobs/{job_id}", get(jobs::get_job))
-        .route("/v1/jobs/{job_id}/executions", get(jobs::list_job_executions))
-        .route("/v1/jobs/{job_id}/cancel", post(jobs::cancel_job))
+        .route("/v1/queues/:queue_id/jobs", post(jobs::create_job).get(jobs::list_jobs))
+        .route("/v1/jobs/:job_id", get(jobs::get_job))
+        .route("/v1/jobs/:job_id/executions", get(jobs::list_job_executions))
+        .route("/v1/jobs/:job_id/cancel", post(jobs::cancel_job))
         // Projects
         .route("/v1/projects", get(projects::list_projects).post(projects::create_project))
-        .route("/v1/projects/{project_id}/queues", get(queues::list_queues))
+        .route("/v1/projects/:project_id/queues", get(queues::list_queues))
         // Queues
         .route("/v1/queues", post(queues::create_queue))
-        .route("/v1/queues/{queue_id}/stats", get(queues::queue_stats))
-        .route("/v1/queues/{queue_id}/pause", post(queues::pause_queue))
-        .route("/v1/queues/{queue_id}/resume", post(queues::resume_queue))
+        .route("/v1/queues/:queue_id/stats", get(queues::queue_stats))
+        .route("/v1/queues/:queue_id/pause", post(queues::pause_queue))
+        .route("/v1/queues/:queue_id/resume", post(queues::resume_queue))
         // DLQ
         .route("/v1/dlq", get(dlq::list_dlq))
-        .route("/v1/dlq/{dlq_id}/retry", post(dlq::retry_dlq_job))
+        .route("/v1/dlq/:dlq_id/retry", post(dlq::retry_dlq_job))
         // Workflow dependencies (Saga / DAG)
         .route("/v1/workflows/dependencies", post(workflows::create_dependency))
         // Metrics
