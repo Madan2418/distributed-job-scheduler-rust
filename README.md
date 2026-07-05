@@ -1,4 +1,4 @@
-# 🚀 Distributed Job Scheduling Platform
+# Distributed Job Scheduling Platform
 
 A production-ready, master-less, horizontally scalable distributed job scheduling platform written in **Rust (Axum + SQLx + Tokio)** with a live **React + TypeScript** control plane. Built with a zero-trust posture, atomic concurrency control, transactional outbox reliability, and advanced workflow orchestration.
 
@@ -6,7 +6,7 @@ Developed for the Codity.ai Intern Assignment.
 
 ---
 
-## 🌟 Key Highlights & Rubric Coverage
+## Key Highlights and Rubric Coverage
 
 This platform prioritizes **engineering rigor, reliability guarantees, and clean separation of concerns** over simple feature count, fully satisfying the evaluation rubric:
 
@@ -20,38 +20,38 @@ This platform prioritizes **engineering rigor, reliability guarantees, and clean
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```mermaid
 flowchart TB
-    subgraph Client Layer [Client Layer]
-        ReactDash["React Dashboard (Port 3000)"]
+    subgraph ClientLayer ["Client Layer"]
+        ReactDash["React Dashboard"]
     end
 
-    subgraph API Layer [API Control Plane (Port 8080)]
+    subgraph APILayer ["API Control Plane"]
         AxumServer["Axum HTTP Server"]
         WSHandler["WebSocket Handler"]
-        AuthMid["Auth Middleware (JWT)"]
-        Limiter["Rate Limit Middleware (Redis)"]
+        AuthMid["Auth Middleware"]
+        Limiter["Rate Limit Middleware"]
     end
 
-    subgraph Business & Service Layer [Business & Service Layer]
+    subgraph BusinessServiceLayer ["Business & Service Layer"]
         JobService["Job Service"]
         QueueService["Queue Service"]
-        SagaCoord["Saga Coordinator (DAG)"]
-        LLMClient["Gemini LLM Client (Circuit Breaker)"]
+        SagaCoord["Saga Coordinator"]
+        LLMClient["Gemini LLM Client"]
     end
 
-    subgraph Storage & Event Backbone [Storage & Event Backbone]
+    subgraph StorageEventBackbone ["Storage & Event Backbone"]
         Postgres[(PostgreSQL 16)]
         Redis[(Redis 7)]
         OutboxRelay["Outbox Relay Thread"]
     end
 
-    subgraph Execution Pool [Worker Pool]
+    subgraph ExecutionPool ["Worker Pool"]
         WorkerInstance["Stateless Worker Thread"]
-        PollerLoop["Poller (FOR UPDATE SKIP LOCKED)"]
-        ExecEngine["Concurrent Executor (Tokio tasks)"]
+        PollerLoop["Poller"]
+        ExecEngine["Concurrent Executor"]
         Heartbeat["Liveness Heartbeat Thread"]
     end
 
@@ -106,7 +106,7 @@ flowchart TB
 
 ---
 
-## 🗄️ Database Design (ERD)
+## Database Design
 
 ```mermaid
 erDiagram
@@ -264,7 +264,7 @@ erDiagram
 
 ---
 
-## 🔒 Reliability & Concurrency Model
+## Reliability & Concurrency Model
 
 ### 1. Atomic Claiming (No Race Conditions)
 To claim a job, workers execute an atomic, row-locking transaction:
@@ -299,7 +299,7 @@ Retries are calculated dynamically. The poller passes the job to the execution e
 
 ---
 
-## 🚀 Setup & Execution Guide
+## Setup & Execution Guide
 
 The platform can be run locally or via Docker Compose.
 
@@ -356,7 +356,7 @@ Ensure you have **Rust (1.75+)**, **Postgres**, **Redis**, and **Node.js (18+)**
 
 ---
 
-## 🧪 Testing
+## Testing
 Critical functionality is covered by automated unit and integration tests.
 
 ### Running Integration Tests (Atomic Claims & Concurrency Check)
@@ -371,7 +371,7 @@ cargo test
 
 ---
 
-## 📄 API Documentation Summary
+## API Documentation Summary
 
 All endpoints are versioned under `/v1` and protected by JWT authentication (except auth endpoints).
 
@@ -399,7 +399,7 @@ All endpoints are versioned under `/v1` and protected by JWT authentication (exc
 
 ---
 
-## 🎁 Bonus Features Implemented
+## Bonus Features Implemented
 
 1.  **Workflow Dependencies (DAGs)**:
     Allows linking jobs together in a dependency tree. A downstream job (`Job B`) will remain `Pending` until its parent job (`Job A`) successfully completes. If a parent job fails, dependent child jobs are not executed, and compensation rules are triggered.
