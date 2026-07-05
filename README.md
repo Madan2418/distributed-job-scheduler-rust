@@ -113,12 +113,12 @@ erDiagram
     organizations {
         uuid id PK
         text name
-        text slug UNIQUE
+        text slug
         timestamptz created_at
     }
     users {
         uuid id PK
-        text email UNIQUE
+        text email
         text password_hash
         text display_name
         boolean is_active
@@ -128,7 +128,7 @@ erDiagram
     refresh_tokens {
         uuid id PK
         uuid user_id FK
-        text token_hash UNIQUE
+        text token_hash
         timestamptz expires_at
         boolean revoked
         timestamptz created_at
@@ -181,7 +181,7 @@ erDiagram
         int max_attempts
         int attempt_count
         uuid correlation_id
-        text idempotency_key UNIQUE
+        text idempotency_key
         timestamptz scheduled_at
         text cron_expression
         timestamptz next_attempt_at
