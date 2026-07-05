@@ -10,13 +10,13 @@ Developed for the Codity.ai Intern Assignment.
 
 This platform prioritizes **engineering rigor, reliability guarantees, and clean separation of concerns** over simple feature count, fully satisfying the evaluation rubric:
 
-*   **System Architecture (20/20)**: Modular monolith with clean dependency inversion. Pure domain layer insulated from database and delivery/API protocols.
-*   **Database Design (20/20)**: Fully normalized PostgreSQL 3NF schema, custom enums, optimized partial indexes, referential integrity cascades, and a transactional event outbox.
-*   **Backend Engineering (20/20)**: High-performance async Rust utilizing `Tokio`. Thread-safe worker pools with heartbeats, active task telemetry, and structured tracing.
-*   **Reliability & Concurrency (15/15)**: Concurrency claimed via atomic `FOR UPDATE SKIP LOCKED` transactions. Backoff strategy pattern for retries (Fixed/Linear/Exponential). AI failure analysis wrapped in a circuit breaker.
-*   **Frontend & UX (10/10)**: Real-time React dashboard powered by WebSockets + Redis Pub/Sub, featuring custom project/queue wizards, metric visualizers, and DLQ management.
-*   **API Design (5/5)**: Versioned REST endpoints under `/v1`, token rotation authentication, and correlation ID tracking headers.
-*   **Testing (5/5)**: Verified integration tests demonstrating concurrent claiming correctness under race conditions.
+*   **System Architecture**: Modular monolith with clean dependency inversion. Pure domain layer insulated from database and delivery/API protocols.
+*   **Database Design**: Fully normalized PostgreSQL 3NF schema, custom enums, optimized partial indexes, referential integrity cascades, and a transactional event outbox.
+*   **Backend Engineering**: High-performance async Rust utilizing `Tokio`. Thread-safe worker pools with heartbeats, active task telemetry, and structured tracing.
+*   **Reliability & Concurrency**: Concurrency claimed via atomic `FOR UPDATE SKIP LOCKED` transactions. Backoff strategy pattern for retries (Fixed/Linear/Exponential). AI failure analysis wrapped in a circuit breaker.
+*   **Frontend & UX**: Real-time React dashboard powered by WebSockets + Redis Pub/Sub, featuring custom project/queue wizards, metric visualizers, and DLQ management.
+*   **API Design**: Versioned REST endpoints under `/v1`, token rotation authentication, and correlation ID tracking headers.
+*   **Testing**: Verified integration tests demonstrating concurrent claiming correctness under race conditions.
 
 ---
 
@@ -377,6 +377,9 @@ All endpoints are versioned under `/v1` and protected by JWT authentication (exc
 
 | Endpoint | Method | Description | Auth |
 |---|---|---|---|
+| `/health` | `GET` | Retrieve general cluster health status | Public |
+| `/ready` | `GET` | Readiness probe (ensures DB/Redis connections are active) | Public |
+| `/live` | `GET` | Liveness probe (process level check) | Public |
 | `POST /v1/auth/register` | `POST` | Register a new user | Public |
 | `POST /v1/auth/login` | `POST` | Log in and return access & refresh tokens | Public |
 | `POST /v1/auth/refresh` | `POST` | Exchange a valid refresh token for a new access token | Public |
