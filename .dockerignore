@@ -1,0 +1,25 @@
+# Rust build artifacts — the single biggest thing to exclude (4+ GB)
+target/
+
+# Git history
+.git/
+.gitignore
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment files (use docker-compose env_file instead)
+.env
+.env.local
+
+# Frontend build artifacts (the frontend has its own Dockerfile)
+frontend/node_modules/
+frontend/npm-cache/
+frontend/dist/
+
+# Docs and extras
+*.md
+architecture.md
